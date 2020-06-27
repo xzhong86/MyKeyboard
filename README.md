@@ -17,8 +17,9 @@
 
 ### Build BootloaderDFU
 
-  cd tmk_keyboard/tmk_core/protocol/lufa/lufa-abcminiuser/Bootloaders/DFU
-  make MCU=atmega32u4 F_CPU=16000000
+  `cd tmk_keyboard/tmk_core/protocol/lufa/lufa-abcminiuser/Bootloaders/DFU`
+  `make MCU=atmega32u4 F_CPU=16000000`
 
 ## Commands:
 
+  See command.txt.
