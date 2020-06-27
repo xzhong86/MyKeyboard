@@ -2,6 +2,10 @@
 
   Base on [TMK Core](https://github.com/tmk/tmk_core) firmware.
 
+  Reference to [TMK Firmware](https://github.com/tmk/tmk_keyboard).
+
+  Use GPLv3 License. TMK code and submodules have its own license.
+
 ## Build
 
   update submodule:
