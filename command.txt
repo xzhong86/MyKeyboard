@@ -1,0 +1,33 @@
+
+Install avrdude on MacOS
+brew install avrdude
+ 
+sudo dfu-programmer atmega32u4 get bootloader-version
+sudo ~/local/bin/dfu-programmer atmega32u4 get bootloader-version
+sudo ~/local/bin/dfu-programmer atmega32u4 erase --force
+sudo ~/local/bin/dfu-programmer atmega32u4 flash gh60_lufa.hex 
+sudo ~/local/bin/dfu-programmer atmega32u4 reset
+
+avrdude -patmega32u4 -cusbtiny -t
+avrdude -patmega32u4 -cusbtiny -U flash:w:./usb_usb.hex:i -U flash:w:./BootloaderDFU.hex:i
+
+# in avrdude interactive
+avrdude> write efuse 0 0xc3
+>>> write efuse 0 0xc3 
+avrdude> write hfuse 0 0xd9
+>>> write hfuse 0 0xd9
+
+# not force boot loader after reset, bit3=1
+write efuse 0 0xcd
+
+# force boot loader after reset, bit3=0
+write efuse 0 0xc3
+
+# reset vector = 0 (application), bit0=1
+write hfuse 0 0xd9
+
+# reset vector = bootloader (), bit0=0
+write hfuse 0 0xd8
+
+for LUFA DFU: hfuse=d9 efuse=c3
+for Arduino:  hfuse=d8 efuse=cb  (leonardo default)
