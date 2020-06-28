@@ -71,11 +71,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 )
 
-/* for debug */
-//#define SUART_OUT_PORT  PORTF
-//#define SUART_OUT_BIT   5
-//#define SUART_IN_PIN    PINF
-//#define SUART_IN_BIT    6
+/* period of tapping(ms) */
+#define TAPPING_TERM    300
+/* tap count needed for toggling a feature */
+#define TAPPING_TOGGLE  5
+/* Oneshot timeout(ms) */
+#define ONESHOT_TIMEOUT 300
+
+/* Boot Magic salt key: Space */
+#define BOOTMAGIC_KEY_SALT      KC_SPACE
 
 /*
  * Feature disable options
