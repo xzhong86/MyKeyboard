@@ -12,9 +12,29 @@
 	} while (0)
 
 //#define ZHONG_BOARD_VER_0_2
-#define BOARD_LEONARDO
+//#define BOARD_LEONARDO
+//#define ZHONG_MINIBOARD_V0_9
+#define ZHONG_MINIBOARD_V1_0
 
-#ifdef ZHONG_BOARD_VER_0_1 // use PortD 1/4
+
+#if defined ZHONG_MINIBOARD_V0_9
+
+// TX LED
+#define LED_CAPS_ON()   PORT_OUT_0(D, 5)
+#define LED_CAPS_OFF()  PORT_OUT_1(D, 5)
+// RX LED
+#define LED_SPCFN_ON()  PORT_OUT_0(B, 0)
+#define LED_SPCFN_OFF() PORT_OUT_1(B, 0)
+
+#elif defined ZHONG_MINIBOARD_V1_0
+
+#define LED_CAPS_ON()   PORT_OUT_0(D, 1)
+#define LED_CAPS_OFF()  PORT_OUT_1(D, 1)
+
+#define LED_SPCFN_ON()  PORT_OUT_0(D, 0)
+#define LED_SPCFN_OFF() PORT_OUT_1(D, 0)
+
+#elif defined ZHONG_BOARD_VER_0_1 // use PortD 1/4
 
 #define LED_CAPS_ON()   PORT_OUT_1(D, 1)
 #define LED_CAPS_OFF()  PORT_OUT_Z(D, 1)

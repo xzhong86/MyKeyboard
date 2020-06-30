@@ -98,6 +98,7 @@ int main(void)
 */
 
     debug("init: done\n");
+    LED_TX_OFF;
 
     for (;;) {
         keyboard_task();

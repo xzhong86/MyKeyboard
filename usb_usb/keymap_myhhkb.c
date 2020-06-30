@@ -55,7 +55,8 @@ enum {
 	LAYER_DEFAULT,
 	LAYER_MAP_SPACEFN,
 	LAYER_MAP_FN,
-	LAYER_SHIFT_MAP
+	LAYER_SHIFT_MAP,
+        LAYER_MAP_MOVING
 };
 
 const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
@@ -67,22 +68,40 @@ const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,    BSPC,  DEL, END, PGDN,
     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,         ENT,
     FN2, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,              FN3,        UP,
-         LGUI,LALT,          FN1,                FN0, RGUI,                     LEFT,DOWN,RGHT
+         LGUI,LALT,          FN1,                FN4, FN5,                      LEFT,DOWN,RGHT
   ),
 #define FN_OpenFnMap  0
 #define FN_SpaceFn    1
 #define FN_LShiftMap  2
 #define FN_RShiftMap  3
+#define FN_WinLeft    4
+#define FN_WinRight   5
 
   [LAYER_MAP_SPACEFN] = KEYMAP_HHKB(
          NO,  NO,  NO,  NO,     NO,  NO,  NO,  NO,    NO,  NO,  NO,  NO,        NO,  NO,  NO,
     GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,TRNS,TRNS,  NO,  NO,  NO,
-    TRNS,NO,  NO,  NO,  NO,  NO,  NO,  PGUP,UP,  END, NO,  NO,  BSPC,    DEL,   NO,  NO,  NO,
+    TRNS,NO,  NO,  FN4, FN5, NO,  NO,  PGUP,UP,  END, NO,  NO,  BSPC,    DEL,   NO,  NO,  NO,
     TRNS,NO,  NO,  NO,  NO,  NO,  HOME,LEFT,DOWN,RGHT,NO,  GRV,          TRNS,
     TRNS,NO,  DEL, NO,  NO,  SPC, PGDN,NO,  NO,  NO,  NO,                TRNS,       NO,
          TRNS,TRNS,               TRNS,          TRNS,TRNS,                     NO,  NO,  NO
   ),
+  //[LAYER_MAP_SPACEFN] = KEYMAP_HHKB(
+  //       NO,  NO,  NO,  NO,     NO,  NO,  NO,  NO,    NO,  NO,  NO,  NO,        NO,  NO,  NO,
+  //  GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,TRNS,TRNS,  NO,  NO,  NO,
+  //  TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  BSPC,    DEL,   NO,  NO,  NO,
+  //  TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  GRV,          TRNS,
+  //  TRNS,NO,  DEL, NO,  NO,  SPC, NO,  NO,  NO,  NO,  NO,                TRNS,       NO,
+  //       TRNS,TRNS,               TRNS,          TRNS,TRNS,                     NO,  NO,  NO
+  //),
 
+  //[LAYER_MAP_MOVING] = KEYMAP_HHKB(
+  //       TRNS,TRNS,TRNS,TRNS,   TRNS,TRNS,TRNS,TRNS,  TRNS,TRNS,TRNS,TRNS,      TRNS,TRNS,TRNS,
+  //  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS,TRNS,TRNS,
+  //  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PGUP,UP,  END,      TRNS, TRNS,TRNS,TRNS,
+  //  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,HOME,LEFT,RGHT,          TRNS,
+  //  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PGDN,DOWN,               TRNS,      TRNS,
+  //       TRNS,TRNS,               TRNS,          FN4, FN4,                      TRNS,TRNS,TRNS
+  //),
 
   [LAYER_MAP_FN] = KEYMAP_HHKB(
          NO,  NO,  NO,  NO,     NO,  NO,  NO,  NO,    NO,  NO,  NO,  NO,        NO,  NO,  NO,
@@ -109,11 +128,14 @@ const action_t PROGMEM fn_actions[] = {
     [FN_SpaceFn]        = ACTION_LAYER_TAP_KEY(LAYER_MAP_SPACEFN, KC_SPACE),
     [FN_LShiftMap]      = ACTION_LAYER_MODS(LAYER_SHIFT_MAP, MOD_LSFT),
     [FN_RShiftMap]      = ACTION_LAYER_MODS(LAYER_SHIFT_MAP, MOD_RSFT),
+    [FN_WinLeft]        = ACTION_MODS_KEY(MOD_LGUI | MOD_LCTL, KC_LEFT),
+    [FN_WinRight]       = ACTION_MODS_KEY(MOD_LGUI | MOD_LCTL, KC_RIGHT),
 };
 
 void hook_layer_change(uint32_t layer_state)
 {
-    if (layer_state & (1 << LAYER_MAP_SPACEFN)) {
+    //if (layer_state & (1 << LAYER_MAP_SPACEFN)) {
+    if (layer_state & (1 << LAYER_MAP_MOVING)) {
         LED_SPCFN_ON();
     } else {
         LED_SPCFN_OFF();
