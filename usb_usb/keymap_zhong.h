@@ -76,22 +76,30 @@
     KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,  \
     KE0,KE3,KE2,        K2C,                KE6,KE7,K65,KE4   \
 ) KEYMAP_K87( \
-    K29,     F1, F2, F3, F4, F5, F6, F7, F8, F9,F10,F11,F12,      PSCR,SLCK,BRK,    \
-    K35,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,NO, K2A,  INS, HOME,PGUP,   \
-    K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,    K31,  DEL, END, PGDN,   \
-    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    NO, K28,                    \
-    KE1,NO, K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,    NO, KE5,       UP,          \
-    KE0,KE3,KE2,NO, NO,     K2C,    NO, NO, NO, KE6,KE7,K65,KE4,  LEFT,DOWN,RGHT,   \
+    K29,     F1, F2, F3, F4, F5, F6, F7, F8, F9,F10,F11,F12,  PSCR,SLCK,BRK,    \
+    K35,K1E,K1F,K20,K21,K22,K23,K24,K25,K26,K27,K2D,K2E,K2A,  INS, HOME,PGUP,   \
+    K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,  DEL, END, PGDN,   \
+    K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K28,                    \
+    KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,       UP,          \
+    KE0,KE3,KE2,            K2C,            KE6,KE7,K65,KE4,  LEFT,DOWN,RGHT,   \
 )
 
 
-#define KEYMAP_K60_SPCFN(FNx, FNy)                  \
+#define KEYMAP_K60_SPCFN(K_E, K_R)                  \
         KEYMAP_K60( GRV,                                  \
     NO,  F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, TRNS,  \
-    TRNS,NO,  NO,  FNx, FNy, NO,  NO,  PGUP,UP,  END, NO,  PSCR,NO,  NO,    \
+    TRNS,NO,  NO,  K_E, K_R, NO,  NO,  PGUP,UP,  END, NO,  PSCR,NO,  NO,    \
     TRNS,NO,  NO,  NO,  NO,  NO,  HOME,LEFT,DOWN,RGHT,NO,  GRV,      TRNS,  \
     TRNS,NO,  DEL, NO,  NO,  SPC, PGDN,NO,  BSPC,DEL, BSLS,          TRNS,  \
     TRNS,TRNS,TRNS,               TRNS,               TRNS,TRNS,TRNS,TRNS   )
 
+#define KEYMAP_K60_DEFAULT(CAPS, LCTL, LSFT, LALT, LGUI, RCTL, RSFT, RALT, RGUI)  \
+        KEYMAP_K60( ESC, \
+    GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC,   \
+    TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS,   \
+    CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,    \
+    LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RSFT,   \
+    LCTL,LGUI,LALT,               SPC,                RALT,RGUI,APP, RCTL    )
+                
 
 #endif

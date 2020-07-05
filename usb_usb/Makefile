@@ -46,8 +46,6 @@ TMK_DIR ?= ../tmk_keyboard/tmk_core
 # Directory keyboard dependent files exist
 TARGET_DIR ?= .
 
-KEYMAP ?= zhong
-
 # MCU name
 MCU ?= atmega32u4
 
@@ -84,9 +82,6 @@ ARCH ?= AVR8
 #     If no clock division is performed on the input clock inside the AVR (via the
 #     CPU clock adjust registers or the clock division fuses), this will be equal to F_CPU.
 F_USB ?= $(F_CPU)
-# Interrupt driven control endpoint task
-OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
-
 
 
 # Build Options
@@ -97,8 +92,6 @@ EXTRAKEY_ENABLE ?= yes	# Media control and System control
 CONSOLE_ENABLE ?= yes	# Console for debug
 #COMMAND_ENABLE ?= yes    # Commands for debug and configuration
 #NKRO_ENABLE ?= yes	# USB Nkey Rollover
-#BOOTMAGIC_ENABLE ?= yes
-
 
 # Boot Section Size in bytes
 #   Teensy halfKay   512
@@ -112,8 +105,7 @@ OPT_DEFS += -DBOOTLOADER_SIZE=4096
 #OPT_DEFS += -DNO_ACTION_LAYER
 #OPT_DEFS += -DNO_ACTION_MACRO
 
-SRC ?=  usb_usb.cpp \
-       main.cpp
+SRC ?=  usb_usb.cpp
 
 #
 # Keymap file
