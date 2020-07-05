@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "hook.h"
 #include "suspend.h"
 #include "lufa.h"
-
+#include "board.h"
 
 /* KEY CODE to Matrix
  *
@@ -98,6 +98,8 @@ void matrix_init(void) {
     kbd2.SetReportParser(0, (HIDReportParser*)&kbd_parser2);
     kbd3.SetReportParser(0, (HIDReportParser*)&kbd_parser3);
     kbd4.SetReportParser(0, (HIDReportParser*)&kbd_parser4);
+    PORT_OUT_1(B, 0);
+    PORT_OUT_1(D, 5);
 }
 
 static void or_report(report_keyboard_t report) {
@@ -218,12 +220,14 @@ uint8_t matrix_key_count(void) {
 void matrix_print(void) {
 }
 
+extern "C" void board_led_set(uint8_t usb_led);
 void led_set(uint8_t usb_led)
 {
     if (kbd1.isReady()) kbd1.SetReport(0, 0, 2, 0, 1, &usb_led);
     if (kbd2.isReady()) kbd2.SetReport(0, 0, 2, 0, 1, &usb_led);
     if (kbd3.isReady()) kbd3.SetReport(0, 0, 2, 0, 1, &usb_led);
     if (kbd4.isReady()) kbd4.SetReport(0, 0, 2, 0, 1, &usb_led);
+    board_led_set(usb_led);
 }
 
 // We need to keep doing UHS2 USB::Task() to initialize keyboard

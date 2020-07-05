@@ -81,7 +81,7 @@
     K2B,K14,K1A,K08,K15,K17,K1C,K18,K0C,K12,K13,K2F,K30,K31,  DEL, END, PGDN,   \
     K39,K04,K16,K07,K09,K0A,K0B,K0D,K0E,K0F,K33,K34,    K28,                    \
     KE1,K1D,K1B,K06,K19,K05,K11,K10,K36,K37,K38,        KE5,       UP,          \
-    KE0,KE3,KE2,            K2C,            KE6,KE7,K65,KE4,  LEFT,DOWN,RGHT,   \
+    KE0,KE3,KE2,            K2C,            KE6,KE7,K65,KE4,  LEFT,DOWN,RGHT    \
 )
 
 
@@ -102,4 +102,4 @@
     LCTL,LGUI,LALT,               SPC,                RALT,RGUI,APP, RCTL    )
                 
 
-#endif
+#endif // keymap_zhong.h
