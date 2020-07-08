@@ -9,15 +9,15 @@ Copyright 2018 BruceZh <xzhong86@??.com>
 /**/
 
 enum {
-	LAYER_DEFAULT,
-	LAYER_SPCFN,
-	LAYER_SHIFT,
+    LAYER_DEFAULT,
+    LAYER_SPCFN,
+    LAYER_SHIFT,
 };
 enum {
-        KC_mCAPS = KC_FN0,
-        KC_WINL ,   KC_WINR ,
-        KC_SPCFN,
-        KC_mLSFT,   KC_mRSFT,
+    KC_mCAPS = KC_FN0,
+    KC_WINL ,   KC_WINR ,
+    KC_SPCFN,
+    KC_mLSFT,   KC_mRSFT,
 };
 
 const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
@@ -37,20 +37,18 @@ const action_t PROGMEM fn_actions[] = {
 
 void hook_layer_change(uint32_t layer_state)
 {
-    if (layer_state & (1 << LAYER_SPCFN)) {
+    if (layer_state & (1 << LAYER_SPCFN))
         LED_SPCFN_ON();
-    } else {
+    else
         LED_SPCFN_OFF();
-    }
 }
 
 void board_led_set(uint8_t usb_led)
 {
-    if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
+    if (usb_led & (1<<USB_LED_CAPS_LOCK))
         LED_CAPS_ON();
-    } else {
+    else
         LED_CAPS_OFF();
-    }
-    //if (usb_led & (1<<USB_LED_NUM_LOCK)) {
-    //if (usb_led & (1<<USB_LED_SCROLL_LOCK)) {
+    //if (usb_led & (1<<USB_LED_NUM_LOCK))
+    //if (usb_led & (1<<USB_LED_SCROLL_LOCK))
 }

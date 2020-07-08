@@ -8,6 +8,14 @@
 
   Use GPLv3 License. TMK code and submodules have its own license.
 
+
+
+## Project
+
+Ergodone, is a try for Ergodox/Ergodone style keyboard, but I'm not used to it.
+
+USB_USB, is a usb keyboard converter (or key mapper) which I used for a long time.
+
 ## Build
 
   update submodule:
