@@ -16,15 +16,18 @@ k60 = Keymap.new("
     LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RSFT, 
     LCTL,LGUI,LALT,               SPC,                RALT,RGUI,APP, RCTL  
   )")
-k60_spcfn = k60.map_key({
-  I: 'UP', K: 'DOWN', J: 'LEFT', L: 'RGHT', U: 'PGUP', N: 'PGDN', H: 'HOME', O: 'END',
+k60_num2fn = k60.map_key({
   '1' => 'F1', '2' => 'F2', '3' => 'F3', '4' => 'F4', '5' => 'F5', '6' => 'F6',
   '7' => 'F7', '8' => 'F8', '9' => 'F9', '0' => 'F10', MINS: 'F11', EQL: 'F12',
+  others: 'TRNS'
+})
+k60_spcfn = k60.map_key({
+  I: 'UP', K: 'DOWN', J: 'LEFT', L: 'RGHT', U: 'PGUP', N: 'PGDN', H: 'HOME', O: 'END',
   X: 'DEL', COMM: 'BSPC', DOT: 'DEL', 
   SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
   trans_keys: [/[A-Z]/, 'NO'],
   others: 'TRNS'
-})
+}).merge(k60_num2fn)
 #k60_spcfn.dump
 %>*/
 
@@ -42,7 +45,7 @@ enum {
 
 const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     [LAYER_DEFAULT] = <%= k60.map_key(CAPS: "mCAPS", SPC: "SPCFN", LSFT: "mLSFT", RSFT: "mRSFT").to_code %>,
-    [LAYER_SPCFN] = <%= k60.map_key(E: "WINL", R: "WINR", others: "TRNS").merge(k60_spcfn).to_code %>,
+    [LAYER_SPCFN] = <%= k60.map_key(E: "WINL", R: "WINR", P: "PSCR", others: "TRNS").merge(k60_spcfn).to_code %>,
     [LAYER_SHIFT] = <%= k60.map_key(ESC: "GRV", BSPC: "BSLS", others: "TRNS").to_code %>
 };
 
