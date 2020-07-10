@@ -21,13 +21,16 @@ k60_num2fn = k60.map_key({
   '7' => 'F7', '8' => 'F8', '9' => 'F9', '0' => 'F10', MINS: 'F11', EQL: 'F12',
   others: 'TRNS'
 })
-k60_spcfn = k60.map_key({
+k60_move = k60.map_key({
   I: 'UP', K: 'DOWN', J: 'LEFT', L: 'RGHT', U: 'PGUP', N: 'PGDN', H: 'HOME', O: 'END',
-  X: 'DEL', COMM: 'BSPC', DOT: 'DEL', 
+  others: 'TRNS'
+})
+k60_spcfn = k60.map_key({
+  ESC: 'GRV', X: 'DEL', COMM: 'BSPC', DOT: 'DEL',
   SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
   trans_keys: [/[A-Z]/, 'NO'],
   others: 'TRNS'
-}).merge(k60_num2fn)
+}).merge(k60_num2fn).merge(k60_move)
 #k60_spcfn.dump
 %>*/
 
