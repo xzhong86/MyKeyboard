@@ -58,7 +58,8 @@ class Keymap
       ks_b = kmap_b.keys[ks_i]
       ks.map.with_index do |k_a, k_i|
         k_b = ks_b[k_i]
-        k_a == "TRNS" ? k_b : k_a
+        (k_a == "TRNS" or
+         k_a == "NO" and k_b != "TRNS") ? k_b : k_a
       end
     end
     Keymap.new @type, keys
