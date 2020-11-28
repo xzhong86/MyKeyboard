@@ -10,6 +10,7 @@ sudo ~/local/bin/dfu-programmer atmega32u4 reset
 
 avrdude -patmega32u4 -cusbtiny -t
 avrdude -patmega32u4 -cusbtiny -U flash:w:./usb_usb.hex:i -U flash:w:./BootloaderDFU.hex:i
+avrdude -patmega32u4 -cusbtiny -U hfuse:w:0xd9:m -U efuse:w:0xc3:m  # for LUFA DFU
 
 # in avrdude interactive
 avrdude> write efuse 0 0xc3
