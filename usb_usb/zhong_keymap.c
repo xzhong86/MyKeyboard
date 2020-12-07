@@ -30,7 +30,13 @@ k60_spcfn = k60.map_key({
   SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
   trans_keys: [/[A-Z]/, 'NO'],
   others: 'TRNS'
-}).merge(k60_num2fn).merge(k60_move)
+}).merge(k60_num2fn) #.merge(k60_move)
+k60_edit = k60.map_key({
+  D: 'LSFT', S: 'LCTL', A: 'LALT', W: 'TAB', COMM: 'BSPC', DOT: 'DEL',
+  SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
+  trans_keys: [/[A-Z]/, 'NO'],
+  others: 'TRNS'
+}).merge(k60_move)
 #k60_spcfn.dump
 %>*/
 
@@ -38,18 +44,24 @@ enum {
     LAYER_DEFAULT,
     LAYER_SPCFN,
     LAYER_SHIFT,
+    LAYER_EDIT,
+    LAYER_SCLN,
 };
 enum {
     KC_mCAPS = KC_FN0,
     KC_WINL ,   KC_WINR ,
     KC_SPCFN,
     KC_mLSFT,   KC_mRSFT,
+    KC_mEdit,
+    KC_mSCLN,
 };
 
 const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
-    [LAYER_DEFAULT] = <%= k60.map_key(CAPS: "mCAPS", SPC: "SPCFN", LSFT: "mLSFT", RSFT: "mRSFT").to_code %>,
+    [LAYER_DEFAULT] = <%= k60.map_key(CAPS: "mCAPS", SPC: "SPCFN", LSFT: "mLSFT", RSFT: "mRSFT", F: "mEdit").to_code %>,
     [LAYER_SPCFN] = <%= k60.map_key(E: "WINL", R: "WINR", P: "PSCR", others: "TRNS").merge(k60_spcfn).to_code %>,
-    [LAYER_SHIFT] = <%= k60.map_key(ESC: "GRV", BSPC: "BSLS", others: "TRNS").to_code %>
+    [LAYER_SHIFT] = <%= k60.map_key(ESC: "GRV", BSPC: "BSLS", F: "F", others: "TRNS").to_code %>,
+    [LAYER_EDIT]  = <%= k60_edit.to_code %>,
+    //[LAYER_SCLN]  = <%= k60_move.to_code %>,
 };
 
 const action_t PROGMEM fn_actions[] = {
@@ -57,6 +69,8 @@ const action_t PROGMEM fn_actions[] = {
     [KC_WINL  - KC_FN0]   = ACTION_MODS_KEY(MOD_LGUI | MOD_LCTL, KC_LEFT),
     [KC_WINR  - KC_FN0]   = ACTION_MODS_KEY(MOD_LGUI | MOD_LCTL, KC_RIGHT),
     [KC_SPCFN - KC_FN0]   = ACTION_LAYER_TAP_KEY(LAYER_SPCFN, KC_SPACE),
+    //[KC_mSCLN - KC_FN0]   = ACTION_LAYER_TAP_KEY(LAYER_SCLN, KC_SCLN),
+    [KC_mEdit - KC_FN0]   = ACTION_LAYER_TAP_KEY(LAYER_EDIT, KC_F),
     [KC_mLSFT - KC_FN0]   = ACTION_LAYER_MODS(LAYER_SHIFT, MOD_LSFT),
     [KC_mRSFT - KC_FN0]   = ACTION_LAYER_MODS(LAYER_SHIFT, MOD_RSFT),
 };
