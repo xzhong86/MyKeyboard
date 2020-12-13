@@ -6,6 +6,9 @@ Copyright 2018 BruceZh <xzhong86@??.com>
 #include "board.h"
 #include "led.h"
 
+#include "action_layer.h"  // for hook
+#include "action_util.h"  // for hook
+
 /*<%
 load './gen-keymap.rb'
 k60 = Keymap.new("
@@ -43,25 +46,19 @@ k60_edit = k60.map_key({
 enum {
     LAYER_DEFAULT,
     LAYER_SPCFN,
-    LAYER_SHIFT,
     LAYER_EDIT,
-    LAYER_SCLN,
 };
 enum {
     KC_mCAPS = KC_FN0,
     KC_WINL ,   KC_WINR ,
     KC_SPCFN,
-    KC_mLSFT,   KC_mRSFT,
     KC_mEdit,
-    KC_mSCLN,
 };
 
 const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
-    [LAYER_DEFAULT] = <%= k60.map_key(CAPS: "mCAPS", SPC: "SPCFN", LSFT: "mLSFT", RSFT: "mRSFT", F: "mEdit").to_code %>,
+    [LAYER_DEFAULT] = <%= k60.map_key(CAPS: "mCAPS", SPC: "SPCFN", F: "mEdit").to_code %>,
     [LAYER_SPCFN] = <%= k60.map_key(E: "WINL", R: "WINR", P: "PSCR", others: "TRNS").merge(k60_spcfn).to_code %>,
-    [LAYER_SHIFT] = <%= k60.map_key(ESC: "GRV", BSPC: "BSLS", F: "F", others: "TRNS").to_code %>,
     [LAYER_EDIT]  = <%= k60_edit.to_code %>,
-    //[LAYER_SCLN]  = <%= k60_move.to_code %>,
 };
 
 const action_t PROGMEM fn_actions[] = {
@@ -69,10 +66,7 @@ const action_t PROGMEM fn_actions[] = {
     [KC_WINL  - KC_FN0]   = ACTION_MODS_KEY(MOD_LGUI | MOD_LCTL, KC_LEFT),
     [KC_WINR  - KC_FN0]   = ACTION_MODS_KEY(MOD_LGUI | MOD_LCTL, KC_RIGHT),
     [KC_SPCFN - KC_FN0]   = ACTION_LAYER_TAP_KEY(LAYER_SPCFN, KC_SPACE),
-    //[KC_mSCLN - KC_FN0]   = ACTION_LAYER_TAP_KEY(LAYER_SCLN, KC_SCLN),
     [KC_mEdit - KC_FN0]   = ACTION_LAYER_TAP_KEY(LAYER_EDIT, KC_F),
-    [KC_mLSFT - KC_FN0]   = ACTION_LAYER_MODS(LAYER_SHIFT, MOD_LSFT),
-    [KC_mRSFT - KC_FN0]   = ACTION_LAYER_MODS(LAYER_SHIFT, MOD_RSFT),
 };
 
 void hook_layer_change(uint32_t layer_state)
@@ -92,3 +86,36 @@ void board_led_set(uint8_t usb_led)
     //if (usb_led & (1<<USB_LED_NUM_LOCK))
     //if (usb_led & (1<<USB_LED_SCROLL_LOCK))
 }
+
+
+// hook for Shift+ESC and Shift+BSPC
+#define MOD_SHIFT  (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT))
+bool hook_process_action(keyrecord_t *record) {
+    static bool esc_as_grv = false;
+    static bool bspc_as_bsls = false;
+
+    keyevent_t event = record->event;
+    action_t action = layer_switch_get_action(event);
+    const uint8_t mods = get_mods();
+    bool only_shift = (mods & MOD_SHIFT) && !(mods & ~MOD_SHIFT);
+    uint8_t key_code = action.key.code;
+    if (KC_ESC != key_code && KC_BSPC != key_code)
+        return false;
+
+    if (KC_ESC == key_code) {
+        if (event.pressed)
+            esc_as_grv = only_shift;
+        key_code = esc_as_grv ? KC_GRV : KC_ESC;
+    }
+    if (KC_BSPC == key_code) {
+        if (event.pressed)
+            bspc_as_bsls = only_shift;
+        key_code = bspc_as_bsls ? KC_BSLS : KC_BSPC;
+    }
+    if (event.pressed)
+        register_code(key_code);
+    else
+        unregister_code(key_code);
+    return true;
+}
+
