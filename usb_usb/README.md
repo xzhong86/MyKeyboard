@@ -15,4 +15,5 @@
 ## Other
 
   Run build.sh to clean/compile Firmware. Use DFU to update Firmware.
+  Short circuit 'RST' pin and 'GND' pin to go into DFU mode. (with DFU bootload in MCU)
 

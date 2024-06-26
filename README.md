@@ -14,7 +14,7 @@
 
 Ergodone, is a try for Ergodox/Ergodone style keyboard, but I'm not used to it.
 
-USB_USB, is a usb keyboard converter (or key mapper) which I used for a long time.
+USB\_USB, is a usb keyboard converter (or key mapper) which I used for a long time.
 
 ## Build
 
@@ -28,6 +28,15 @@ USB_USB, is a usb keyboard converter (or key mapper) which I used for a long tim
   `cd tmk_keyboard/tmk_core/protocol/lufa/lufa-abcminiuser/Bootloaders/DFU`
   `make MCU=atmega32u4 F_CPU=16000000`
 
+## Requirements:
+
+- Basic build environment: `sudo apt install build-essential`
+- AVR toolchain: `sudo apt install gcc-avr avr-libc`
+- Programming tools:
+   - `sudo apt install dfu-programmer`, dfu-programmer, work with DFU boot loader.
+   - `sudo apt install avrdude`, powerful tools, use a "usbtiny" board to connect/program AVR MCU.
+
 ## Commands:
 
   See command.txt.
+
