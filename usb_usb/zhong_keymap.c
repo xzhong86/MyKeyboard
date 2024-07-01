@@ -11,35 +11,10 @@ Copyright 2018 BruceZh <xzhong86@??.com>
 
 /*<%
 load './gen-keymap.rb'
-k60 = Keymap.new("
-  KEYMAP_K60( ESC, 
-    GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC, 
-    TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS, 
-    CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,  
-    LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RSFT, 
-    LCTL,LGUI,LALT,               SPC,                RALT,RGUI,APP, RCTL  
-  )")
-k60_num2fn = k60.map_key({
-  '1' => 'F1', '2' => 'F2', '3' => 'F3', '4' => 'F4', '5' => 'F5', '6' => 'F6',
-  '7' => 'F7', '8' => 'F8', '9' => 'F9', '0' => 'F10', MINS: 'F11', EQL: 'F12',
-  others: 'TRNS'
-})
-k60_move = k60.map_key({
-  I: 'UP', K: 'DOWN', J: 'LEFT', L: 'RGHT', U: 'PGUP', N: 'PGDN', H: 'HOME', O: 'END',
-  others: 'TRNS'
-})
-k60_spcfn = k60.map_key({
-  ESC: 'GRV', X: 'DEL', B: 'SPC', COMM: 'BSPC', DOT: 'DEL',
-  SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
-  trans_keys: [/[A-Z]/, 'NO'],
-  others: 'TRNS'
-}).merge(k60_num2fn) #.merge(k60_move)
-k60_edit = k60.map_key({
-  D: 'LSFT', S: 'LCTL', A: 'LALT', W: 'TAB', COMM: 'BSPC', DOT: 'DEL',
-  SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
-  trans_keys: [/[A-Z]/, 'NO'],
-  others: 'TRNS'
-}).merge(k60_move)
+kmaps = Keymap.get_keymaps()
+k60   = kmaps.k60
+k60_spcfn  = kmaps.k60_spcfn
+k60_f_edit = kmaps.k60_f_edit
 #k60_spcfn.dump
 %>*/
 
@@ -58,7 +33,7 @@ enum {
 const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     [LAYER_DEFAULT] = <%= k60.map_key(CAPS: "mCAPS", SPC: "SPCFN", F: "mEdit").to_code %>,
     [LAYER_SPCFN] = <%= k60.map_key(E: "WINL", R: "WINR", P: "PSCR", others: "TRNS").merge(k60_spcfn).to_code %>,
-    [LAYER_EDIT]  = <%= k60_edit.to_code %>,
+    [LAYER_EDIT]  = <%= k60_f_edit.to_code %>,
 };
 
 const action_t PROGMEM fn_actions[] = {

@@ -1,4 +1,6 @@
 
+require 'ostruct'
+
 class Regexp
   def full_match(str)
     m = self.match(str)
@@ -77,25 +79,59 @@ class Keymap
   end
 end
 
-if __FILE__ == $0
-  k87 = "
+def Keymap.get_keymaps()
+  k87 = Keymap.new("
   KEYMAP_K87(
-    ESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,
-    GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC,
-    TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS,
+    ESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,    PSCR,SLCK,BRK,
+    GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC,   INS, HOME,PGUP,
+    TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS,   DEL, END, PGDN,
     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,
-    FN5, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          FN6,
-    LCTL,LGUI,LALT,          FN1,                     FN0, RALT,RGUI,RCTL,
-  )"
-  k60 = "
+    FN5, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          FN6,         UP,
+    LCTL,LGUI,LALT,          FN1,                     FN0, RALT,RGUI,RCTL,   LEFT,DOWN,RGHT
+  )")
+  k60 = Keymap.new("
   KEYMAP_K60( ESC, 
     GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC, 
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS, 
     CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,  
     LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RSFT, 
     LCTL,LGUI,LALT,               SPC,                RALT,RGUI,APP, RCTL  
-  )"
-  keymap = Keymap.new(k60)
+  )")
+
+  k60_num2fn = k60.map_key({
+    '1' => 'F1', '2' => 'F2', '3' => 'F3', '4' => 'F4', '5' => 'F5', '6' => 'F6',
+    '7' => 'F7', '8' => 'F8', '9' => 'F9', '0' => 'F10', MINS: 'F11', EQL: 'F12',
+    others: 'TRNS'
+  })
+  k60_move = k60.map_key({
+    I: 'UP', K: 'DOWN', J: 'LEFT', L: 'RGHT', U: 'PGUP', N: 'PGDN', H: 'HOME', O: 'END',
+    others: 'TRNS'
+  })
+
+  k60_spcfn = k60.map_key({
+    ESC: 'GRV', X: 'DEL', B: 'SPC', COMM: 'BSPC', DOT: 'DEL',
+    SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
+    trans_keys: [/[A-Z]/, 'NO'],
+    others: 'TRNS'
+  }).merge(k60_num2fn) #.merge(k60_move)
+
+  k60_f_edit = k60.map_key({
+    D: 'LCTL', S: 'LSFT', A: 'LALT', W: 'TAB', COMM: 'BSPC', DOT: 'DEL',
+    SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
+    trans_keys: [/[A-Z]/, 'NO'],
+    others: 'TRNS'
+  }).merge(k60_move)
+
+  maps = {
+    k60: k60, k87: k87, k60_num2fn: k60_num2fn, k60_move: k60_move,
+    k60_spcfn: k60_spcfn, k60_f_edit: k60_f_edit,
+  }
+  OpenStruct.new(maps)
+end
+
+if __FILE__ == $0
+  keymaps  = Keymap.get_keymaps()
+  keymap   = keymaps[:k60] # keymaps[:k87]
   keymap_1 = keymap.map_key({ 'I' => 'UP', 'K' => 'DOWN' })
   puts keymap_1.to_code
   keymap_1.dump
@@ -107,3 +143,4 @@ if __FILE__ == $0
     key == 'APP' ? key : nil
   end.dump
 end
+
