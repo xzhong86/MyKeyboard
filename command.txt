@@ -32,3 +32,5 @@ write hfuse 0 0xd8
 
 for LUFA DFU: hfuse=d9 efuse=c3
 for Arduino:  hfuse=d8 efuse=cb  (leonardo default)
+for SparkFun: hfuse=d8 efuse=fb  (SparkFun Pro Micro) 
+

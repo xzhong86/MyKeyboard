@@ -25,8 +25,9 @@ USB\_USB, is a usb keyboard converter (or key mapper) which I used for a long ti
 
 ### Build BootloaderDFU
 
-  `cd tmk_keyboard/tmk_core/protocol/lufa/lufa-abcminiuser/Bootloaders/DFU`
-  `make MCU=atmega32u4 F_CPU=16000000`
+- `cd tmk_keyboard/tmk_core/protocol/lufa/lufa-abcminiuser/Bootloaders/DFU` , goto DFU folder.
+- `vi makefile` to modify flash size and bootloader size. (and MCU/F\_CPU)
+- `make MCU=atmega32u4 F_CPU=16000000`
 
 ## Requirements:
 
@@ -39,4 +40,10 @@ USB\_USB, is a usb keyboard converter (or key mapper) which I used for a long ti
 ## Commands:
 
   See command.txt.
+
+## Tools:
+
+- [Key test tool](https://wiki.archlinux.org/title/Keyboard_input)
+- [DFU Programmer Tool](https://github.com/dfu-programmer/dfu-programmer)
+
 
