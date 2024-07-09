@@ -109,11 +109,11 @@ def Keymap.get_keymaps()
   })
 
   k60_spcfn = k60.map_key({
-    ESC: 'GRV', X: 'DEL', B: 'SPC', COMM: 'BSPC', DOT: 'DEL',
+    ESC: 'GRV', X: 'DEL', B: 'SPC', P: 'PSCR', COMM: 'BSPC', DOT: 'DEL',
     SCLN: 'NO', QUOT: 'NO', SLSH: 'NO',
     trans_keys: [/[A-Z]/, 'NO'],
     others: 'TRNS'
-  }).merge(k60_num2fn) #.merge(k60_move)
+  }).merge(k60_num2fn).merge(k60_move)
 
   k60_f_edit = k60.map_key({
     D: 'LCTL', S: 'LSFT', A: 'LALT', W: 'TAB', COMM: 'BSPC', DOT: 'DEL',

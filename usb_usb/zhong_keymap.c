@@ -32,7 +32,7 @@ enum {
 
 const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS] PROGMEM = {
     [LAYER_DEFAULT] = <%= k60.map_key(CAPS: "mCAPS", SPC: "SPCFN", F: "mEdit").to_code %>,
-    [LAYER_SPCFN] = <%= k60.map_key(E: "WINL", R: "WINR", P: "PSCR", others: "TRNS").merge(k60_spcfn).to_code %>,
+    [LAYER_SPCFN] = <%= k60.map_key(E: "WINL", R: "WINR", others: "TRNS").merge(k60_spcfn).to_code %>,
     [LAYER_EDIT]  = <%= k60_f_edit.to_code %>,
 };
 

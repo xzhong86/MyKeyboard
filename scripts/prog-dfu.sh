@@ -6,7 +6,7 @@ MCU=atmega32u4
 
 #DFU_PROG=dfu-programmer 
 #DFU_PROG=$HOME/local/bin/dfu-programmer 
-DFU_PROG=$HOME/opt/dfu-programmer/1.1.0/bin/dfu-programmer
+DFU_PROG=/home/zpzhong/opt/dfu-programmer/1.1.0/bin/dfu-programmer
 
 if [ ! -f $HEX_FILE ] ; then
   echo "hex file $HEX_FILE not exist!"
